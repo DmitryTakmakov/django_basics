@@ -9,8 +9,7 @@ links_menu = [
     {'href': 'products_classic', 'name': 'классика'},
 ]
 
-with open('/home/dimadat/PycharmProjects/django_basics/geekshop/mainapp/templates/mainapp/inc/inc_products_categories'
-          '.json', 'r') as categories:
+with open('../geekshop/mainapp/templates/mainapp/inc/inc_products_categories.json', 'r') as categories:
     products_categories = json.load(categories)
 
 
