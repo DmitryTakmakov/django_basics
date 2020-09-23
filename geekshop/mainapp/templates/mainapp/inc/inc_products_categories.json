@@ -1,0 +1,22 @@
+{
+  "products_all": {
+    "img": "img/slider1.jpg",
+    "price": "2585.9"
+  },
+  "products_home": {
+    "img": "img/product-2.jpg",
+    "price": "8683.90"
+  },
+  "products_office": {
+    "img": "img/product-4.jpg",
+    "price": "1111.1"
+  },
+  "products_modern": {
+    "img": "img/product-21.jpg",
+    "price": "1442.29"
+  },
+  "products_classic": {
+    "img": "img/product-3-sm.jpg",
+    "price": "88888.9"
+  }
+}

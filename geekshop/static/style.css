@@ -83,8 +83,8 @@ html, body {
 .basket {
 	display: block;
 	width: 23px;
-	height: 23px;	
-	background-image: url(img/basket.png);
+	height: 20px;
+	background-image: url(img/shopping-basket-solid.svg);
 	position: absolute;
 	top: 63px;
 	left: 1210px;
