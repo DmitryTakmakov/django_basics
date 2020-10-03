@@ -1,16 +1,7 @@
 from django.shortcuts import render
 import json
 
-links_menu = [
-    {'href': 'products_all', 'name': 'все'},
-    {'href': 'products_home', 'name': 'дом'},
-    {'href': 'products_office', 'name': 'офис'},
-    {'href': 'products_modern', 'name': 'модерн'},
-    {'href': 'products_classic', 'name': 'классика'},
-]
-
-with open('../geekshop/mainapp/templates/mainapp/inc/inc_products_categories.json', 'r') as categories:
-    products_categories = json.load(categories)
+from mainapp.models import ProductCategory
 
 
 def main(request):
@@ -20,11 +11,11 @@ def main(request):
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request):
+def products(request, pk=None):
+    links_menu = ProductCategory.objects.all()
     content = {
         'title': "продукты",
         'links_menu': links_menu,
-        'products_categories': products_categories,
     }
     return render(request, 'mainapp/products.html', content)
 
