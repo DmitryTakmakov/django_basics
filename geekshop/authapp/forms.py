@@ -33,6 +33,12 @@ class ShopUserRegisterForm(UserCreationForm):
             raise forms.ValidationError("Вам нет 18 лет!")
         return data
 
+    def clean_first_name(self):
+        data = self.cleaned_data['first_name']
+        if data == 'Keith':
+            raise forms.ValidationError("Your name shouldn't be Keith, eugh!")
+        return data
+
 
 class ShopUserEditForm(UserChangeForm):
     class Meta:
