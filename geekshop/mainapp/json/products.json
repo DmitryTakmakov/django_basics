@@ -38,7 +38,7 @@
   {
     "category": "офис",
     "name": "премиум",
-    "image": "products_images/product-5.jpg",
+    "image": "products_images/product-5-sm.jpg",
     "short_desc": "улучшенный дизайн",
     "description": "идеально впишется в строгий интерьер офиса",
     "price": "3587.41",
@@ -47,7 +47,7 @@
   {
     "category": "модерн",
     "name": "новинка",
-    "image": "products_images/product-6.jpg",
+    "image": "products_images/product-11.jpg",
     "short_desc": "инновационный дизайн",
     "description": "нестандартное решение для современного интерьера",
     "price": "5361.47",
@@ -56,7 +56,7 @@
   {
     "category": "модерн",
     "name": "прогресс",
-    "image": "products_images/product-7.jpg",
+    "image": "products_images/product-21.jpg",
     "short_desc": "прогрессивный дизайн",
     "description": "функциональное и комфортное решение",
     "price": "6789.33",
@@ -65,7 +65,7 @@
   {
     "category": "классика",
     "name": "венеция",
-    "image": "products_images/product-8.jpg",
+    "image": "products_images/product-31.jpg",
     "short_desc": "классические формы",
     "description": "окунитесь в европейский комфорт",
     "price": "4147.51",
@@ -74,7 +74,7 @@
   {
     "category": "классика",
     "name": "тоскана",
-    "image": "products_images/product-9.jpg",
+    "image": "products_images/product-41.jpg",
     "short_desc": "эргономичная спинка",
     "description": "почувствуйте комфорт и насладитесь цветовой гаммой",
     "price": "7147.35",
@@ -83,7 +83,7 @@
   {
     "category": "классика",
     "name": "рим",
-    "image": "products_images/product-10.jpg",
+    "image": "products_images/product-51.jpg",
     "short_desc": "удачные пропорции",
     "description": "компактность и функциональность",
     "price": "8357.77",
