@@ -1,6 +1,9 @@
+import re
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 
+from authapp import validate
 from authapp.models import ShopUser
 
 
@@ -26,6 +29,12 @@ class ShopUserRegisterForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+
+    def clean_password1(self):
+        data = self.cleaned_data['password1']
+        if validate.password_validator(data):
+            raise forms.ValidationError('В пароле должны быть цифры или символы "!?$*%^&#@".')
+        return data
 
     def clean_age(self):
         data = self.cleaned_data['age']
