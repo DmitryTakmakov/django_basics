@@ -58,7 +58,7 @@ def edit(request, pk, quantity):
 
         basket_items = Basket.objects.filter(user=request.user)
         content = {
-            'basket': basket_items,
+            'basket_items': basket_items,
         }
 
         result = render_to_string('basketapp/inc/inc_basket_list.html', content)
