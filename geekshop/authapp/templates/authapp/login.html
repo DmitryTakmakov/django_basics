@@ -3,6 +3,9 @@
 {% block content %}
     <form class="form-horizontal" action="{% url 'authapp:login' %}" method="post">
         {% csrf_token %}
+        {% if next %}
+            <input name="next" type="hidden" value="{{ next }}">
+        {% endif %}
         {{ login_form.as_p }}
         <br>
         <input class="form-control" type="submit" value="Вход">
