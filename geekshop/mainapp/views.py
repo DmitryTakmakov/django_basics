@@ -1,5 +1,6 @@
 import random
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 
 from basketapp.models import Basket
@@ -32,23 +33,37 @@ def main(request):
     return render(request, 'mainapp/index.html', content)
 
 
-def products(request, pk=None):
-    links_menu = ProductCategory.objects.all()
+def products(request, pk=None, page=1):
+    title = 'продукты'
+    links_menu = ProductCategory.objects.filter(is_active=True)
+    basket = get_basket(request.user)
 
     if pk is not None:
         if pk == 0:
-            products_list = Product.objects.all().order_by('price')
-            category = {'name': 'все'}
+            category = {
+                'pk': 0,
+                'name': 'все',
+            }
+            products_list = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products_list = Product.objects.filter(category__pk=pk).order_by('price')
+            products_list = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by(
+                'price')
+
+        paginator = Paginator(products_list, 2)
+        try:
+            products_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
 
         content = {
-            'title': "продукты",
+            'title': title,
             'links_menu': links_menu,
             'category': category,
-            'products': products_list,
-            'basket': get_basket(request.user),
+            'products': products_paginator,
+            'basket': basket,
         }
         return render(request, 'mainapp/products_list.html', content)
 
@@ -60,7 +75,7 @@ def products(request, pk=None):
         'links_menu': links_menu,
         'hot_product': hot_product,
         'same_products': same_products,
-        'basket': get_basket(request.user),
+        'basket': basket,
     }
     return render(request, 'mainapp/products.html', content)
 
