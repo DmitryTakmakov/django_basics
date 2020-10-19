@@ -14,7 +14,7 @@ class UserCreateView(CreateView):
     model = ShopUser
     template_name = 'adminapp/user_update.html'
     success_url = reverse_lazy('adminapp:users')
-    fields = '__all__'
+    form_class = ShopUserAdminEditForm
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, *args, **kwargs):
@@ -89,7 +89,7 @@ class ProductCategoryCreateView(CreateView):
     model = ProductCategory
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('adminapp:categories')
-    fields = '__all__'
+    form_class = ProductCategoryEditForm
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, *args, **kwargs):
