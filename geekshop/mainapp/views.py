@@ -98,12 +98,13 @@ def not_found(request, exception):
 
 def product(request, pk):
     product_item = get_object_or_404(Product, pk=pk)
+    links_menu = ProductCategory.objects.filter(is_active=True)
     title = product_item.name
     content = {
         'title': title,
         'product': product_item,
         'basket': get_basket(request.user),
-        'links_menu': ProductCategory.objects.all(),
+        'links_menu': links_menu,
         'same_products': get_same_products(product_item),
     }
 
