@@ -567,6 +567,8 @@ html, body {
 }
 
 .category-products a .text img {
+    width: auto;
+    height: auto;
     float: none;
     margin-top: 80px;
 }
