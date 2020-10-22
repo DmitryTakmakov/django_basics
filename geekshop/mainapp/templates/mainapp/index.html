@@ -1,5 +1,7 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load custom_tags %}
+
 {% block menu %}
     <div class="slider">
         <div class="header clearfix">
@@ -29,7 +31,8 @@
         <div class="tab-content">
             {% for product in latest_products %}
                 <div class="block">
-                    <a href="{% url 'products:product_page' product.pk %}"><img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+                    <a href="{% url 'products:product_page' product.pk %}"><img
+                            src="{{ product.image|media_folder_products }}" alt="{{ product.short_desc }}">
                         <div class="text">
                             <img src="{% static "img/icon-hover.png" %}" alt="img">
                             <h3>Категория: {{ product.category.name }}</h3>

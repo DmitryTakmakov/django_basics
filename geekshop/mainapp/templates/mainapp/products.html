@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block content %}
     <div class="details">
@@ -10,21 +11,21 @@
         <div class="details-products">
             <div class="details-slider">
                 <div class="slider-product">
-                    <img src="/media/{{ hot_product.image }}" alt="">
+                    <img src="{{ hot_product.image|media_folder_products }}" alt="">
                 </div>
                 <div class="slider-control">
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="">
+                        <a href="#"><img src="{{ hot_product.image|media_folder_products }}" alt="">
                             <div class="text"></div>
                         </a>
                     </div>
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="">
+                        <a href="#"><img src="{{ hot_product.image|media_folder_products }}" alt="">
                             <div class="text"></div>
                         </a>
                     </div>
                     <div class="block">
-                        <a href="#"><img src="/media/{{ hot_product.image }}" alt="">
+                        <a href="#"><img src="{{ hot_product.image|media_folder_products }}" alt="">
                             <div class="text"></div>
                         </a>
                     </div>
@@ -51,7 +52,8 @@
                 <div class="related-products clearfix">
                     {% for product in same_products %}
                         <div class="block">
-                            <a href="{% url 'products:product_page' product.pk %}"><img src="/media/{{ product.image }}" alt="{{ product.short_desc }}">
+                            <a href="{% url 'products:product_page' product.pk %}"><img
+                                    src="{{ product.image|media_folder_products }}" alt="{{ product.short_desc }}">
                                 <div class="text">
                                     <img src="/static/img/icon-hover.png" alt="img">
                                     <h3>Категория: {{ product.category.name }}</h3>

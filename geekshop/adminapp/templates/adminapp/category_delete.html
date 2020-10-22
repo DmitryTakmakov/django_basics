@@ -5,17 +5,17 @@
 {% block content %}
     <div class="category_delete">
         Уверены, что хотите
-        {% if category_to_delete.is_active %}
+        {% if object.is_active %}
             удалить
         {% else %}
             восстановить
         {% endif %}
         категорию
-        {{ category_to_delete.name }}?
-        <form action="{% url 'adminapp:category_delete' category_to_delete.pk %}"
+        {{ object.name }}?
+        <form action="{% url 'adminapp:category_delete' object.pk %}"
               method="post">
             {% csrf_token %}
-            {% if category_to_delete.is_active %}
+            {% if object.is_active %}
                 <input class="btn btn-danger" type="submit" value="удалить">
             {% else %}
                 <input class="btn btn-danger" type="submit" value="восстановить">

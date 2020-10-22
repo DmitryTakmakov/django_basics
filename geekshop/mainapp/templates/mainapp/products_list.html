@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block content %}
     <div class="details">
@@ -9,16 +10,30 @@
 
         <div class="products_list">
             <div class="title clearfix">
-                <h2>
-                    Категория: "{{ category.name|title }}"
-                </h2>
+                <h2>Категория: "{{ category.name|title }}"</h2>
+                <div class="paginator">
+                    {% if products.has_previous %}
+                        <a href="{% url 'products:page' category.pk products.previous_page_number %}">
+                            <
+                        </a>
+                    {% endif %}
+                    <span class="current">
+            страница {{ products.number }} из
+            {{ products.paginator.num_pages }}
+          </span>
+                    {% if products.has_next %}
+                        <a href="{% url 'products:page' category.pk products.next_page_number %}">
+                            >
+                        </a>
+                    {% endif %}
+                </div>
             </div>
             <div class="category-products clearfix">
 
                 {% for product in products %}
                     <div class="block">
                         <a href="{% url 'products:product_page' product.pk %}">
-                            <img src="/media/{{ product.image }}" alt="product">
+                            <img src="{{ product.image|media_folder_products }}" alt="product">
                             <div class="text">
                                 <img src="{% static 'img/icon-hover.png' %}" alt="hover">
                                 <h4>{{ product.name }}</h4>
