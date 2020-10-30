@@ -1,11 +1,20 @@
 {% extends 'authapp/base.html' %}
+{% load static %}
+{% load custom_tags %}
 
 {% block content %}
-    <form class="form-horizontal" action="{% url 'authapp:login' %}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="{% url 'authapp:edit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ edit_form.as_p }}
+        {{ profile_form.as_p }}
         <br>
         <input class="form-control" type="submit" value="Сохранить">
     </form>
+    <div class="user_avatar"><img src="
+        {% if user.is_authenticated and not backends.associated %}
+            {{ user.avatar|media_folder_users }}
+        {% else %}
+            {{ user.shopuserprofile.social_avatar }}
+        {% endif %}" alt="Аватар"></div>
     <a class="btn btn-link" href="{% url 'main' %}">На главную</a>
 {% endblock %}
