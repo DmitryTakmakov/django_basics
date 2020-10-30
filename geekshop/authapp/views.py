@@ -1,9 +1,39 @@
+from django.conf import settings
 from django.contrib import auth
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
+from authapp.models import ShopUser
+
+
+def verify(request, email, activation_key):
+    try:
+        user = ShopUser.objects.get(email=email)
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.is_active = True
+            user.save()
+            auth.login(request, user)
+            return render(request, 'authapp/verification.html')
+        else:
+            print(f'Error activating user: {email}')
+            return render(request, 'authapp/verification.html')
+    except Exception as e:
+        print(e.args)
+        return HttpResponseRedirect(reverse('main'))
+
+
+def send_verification_email(user):
+    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+
+    subject = f'Подтверждение аккаунта пользователя {user.username}'
+
+    message_text = f'Здравствуйте, {user.username}!\nДля подтверждения вашего аккаунта перейдите по ссылке:\n ' \
+                   f'{settings.DOMAIN_NAME}{verify_link}'
+
+    return send_mail(subject, message_text, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
 
 def login(request):
@@ -44,8 +74,13 @@ def register(request):
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
 
         if register_form.is_valid():
-            register_form.save()
-            return HttpResponseRedirect(reverse('auth:login'))
+            user = register_form.save()
+            if send_verification_email(user):
+                print(f'Sending email to {user.email}: Success')
+                return HttpResponseRedirect(reverse('auth:login'))
+            else:
+                print(f'Sending email to {user.email}: Error')
+                return HttpResponseRedirect(reverse('auth:login'))
     else:
         register_form = ShopUserRegisterForm()
     content = {
