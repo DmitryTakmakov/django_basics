@@ -152,7 +152,7 @@ EMAIL_FILE_PATH = 'tmp/email-messages/'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.vk.VKOAuth2',
-    'social_core.backends.google.GoogleOAuth2'
+    'social_core.backends.google.GoogleOAuth2',
 )
 
 with open('geekshop/vk_credentials.json', 'r') as f:
@@ -168,6 +168,11 @@ SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = GOOGLE['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = GOOGLE['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
 SOCIAL_AUTH_GOOGLE_API_KEY = GOOGLE['SOCIAL_AUTH_GOOGLE_API_KEY']
+SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/user.birthday.read', 'https://www.googleapis.com/auth/user.emails.read',
+    'https://www.googleapis.com/auth/user.gender.read', 'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

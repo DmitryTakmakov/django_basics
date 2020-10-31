@@ -47,20 +47,23 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         user.save()
 
     elif backend.name == 'google-oauth2':
-        # api_url = urlunparse(('https',
-        #                       'people.googleapis.com/v1',
-        #                       'people/me/',
-        #                       None,
-        #                       urlencode(OrderedDict(
-        #                           personFields=','.join(('emailAddresses', 'genders', 'names', 'birthdays')),
-        #                           key=settings.SOCIAL_AUTH_GOOGLE_API_KEY)),
-        #                       None))
-        #
-        # resp = requests.get(api_url)
+        api_url = urlunparse(('https',
+                              'people.googleapis.com/v1',
+                              'people/me/',
+                              None,
+                              urlencode(OrderedDict(
+                                  personFields=','.join(('emailAddresses', 'genders', 'names', 'birthdays')),
+                                  key=settings.SOCIAL_AUTH_GOOGLE_API_KEY)),
+                              None))
+
+        resp = requests.get(api_url)
+        # print(api_url)
+        # print(response)
+        # print(resp)
         # if resp.status_code != 200:
         #     return
-        #
-        # data = resp.json()
+
+        data = resp.json()
         if response['picture']:
             user.shopuserprofile.social_avatar = response['picture']
 
