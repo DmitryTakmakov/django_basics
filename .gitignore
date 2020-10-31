@@ -2,3 +2,5 @@
 /.idea/*
 /webinars/
 /webinars/*
+vk_credentials.json
+google_credentials.json

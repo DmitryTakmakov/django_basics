@@ -26,6 +26,7 @@ urlpatterns = [
     path('contact/', mainapp.contact, name='contact'),
     path('basket/', include('basketapp.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='adminapp')),
+    path('', include('social_django.urls', namespace='social'))
 ]
 
 handler404 = mainapp.not_found
