@@ -20,6 +20,7 @@ class ProductCategoryEditForm(forms.ModelForm):
         super(ProductCategoryEditForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
 
 
 class ProductEditForm(forms.ModelForm):
@@ -31,3 +32,4 @@ class ProductEditForm(forms.ModelForm):
         super(ProductEditForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''

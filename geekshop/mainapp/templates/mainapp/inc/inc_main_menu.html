@@ -19,9 +19,24 @@
     </li>
     {% if user.is_authenticated %}
         <li>
-            <a href="{% url 'auth:edit' %}">
-                {{ user.first_name|default:'Пользователь' }}
-            </a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    {{ user.first_name|default:'Пользователь' }}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{% url 'auth:edit' %}">
+                            Профиль
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'order:orders_list' %}">
+                            Заказы
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
     {% endif %}
     {% if user.is_superuser %}
