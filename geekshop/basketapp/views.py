@@ -11,7 +11,7 @@ from mainapp.models import Product
 @login_required
 def basket(request):
     title = 'корзина'
-    basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+    basket_items = Basket.get_items(request.user)
 
     content = {
         'title': title,
