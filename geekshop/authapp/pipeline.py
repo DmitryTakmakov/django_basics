@@ -1,3 +1,4 @@
+import urllib.request
 from collections import OrderedDict
 from datetime import datetime
 from urllib.parse import urlunparse, urlencode
@@ -42,7 +43,8 @@ def save_user_profile(backend, user, response, *args, **kwargs):
             user.age = age
 
         if data['photo_200_orig']:
-            user.shopuserprofile.social_avatar = data['photo_200_orig']
+            urllib.request.urlretrieve(data['photo_200_orig'], f'{settings.MEDIA_ROOT}/users_avatars/av_{user.pk}.jpg')
+            user.avatar = f'users_avatars/av_{user.pk}.jpg'
 
         user.save()
 

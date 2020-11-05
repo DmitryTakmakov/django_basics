@@ -8,6 +8,17 @@
         <a href="{% url 'orderapp:order_delete' object.pk %}">удалить</a>
     </button>
 {% endif %}
+{% if object.status %}
+    {% if object.status != 'DN' %}
+        {% if object.status != 'CNC' %}
+            <button class="btn btn-warning btn-round form-control last">
+                <a href="{% url 'orderapp:order_processing_imitation' object.pk %}">
+                    педалировать заказ
+                </a>
+            </button>
+        {% endif %}
+    {% endif %}
+{% endif %}
 <button class="btn btn-info btn-round form-control last">
     <a href="{% url 'orderapp:orders_list' %}">
         к списку заказов
