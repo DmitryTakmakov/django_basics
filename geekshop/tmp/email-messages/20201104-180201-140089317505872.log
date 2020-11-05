@@ -1,0 +1,15 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: 
+ =?utf-8?b?0J/QvtC00YLQstC10YDQttC00LXQvdC40LUg0LDQutC60LDRg9C90YLQsCDQv9C+?=
+ =?utf-8?b?0LvRjNC30L7QstCw0YLQtdC70Y8gdGVzdGluZ192aWV3cw==?=
+From: webmaster@localhost
+To: testtestttt@geek.shop
+Date: Wed, 04 Nov 2020 18:02:01 -0000
+Message-ID: <160451292124.40927.6685202739975806900@dimadat-Latitude-E6430>
+
+Здравствуйте, testing_views!
+Для подтверждения вашего аккаунта перейдите по ссылке:
+ http://localhost:8000/auth/verify/testtestttt@geek.shop/9d46a1236dee87d82e4af4f6af3b6b2e28533e3c
+-------------------------------------------------------------------------------

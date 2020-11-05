@@ -1,6 +1,6 @@
 {% load custom_tags %}
 
-{% for item in basket_items %}
+{% for item in basket_list %}
     <div class="basket_record">
         <img src="{{ item.product.image|media_folder_products }}"
              alt="{{ item.product.short_desc }}">
@@ -15,10 +15,10 @@
     </div>
 {% endfor %}
 
-{% if basket_items %}
+{% if basket_list %}
     <div class="basket_summary">
-        В корзине {{ basket_items.0.total_quantity }} товаров общей стоимостью
-        {{ basket_items.0.total_cost }} руб
+        В корзине {{ basket_list.0.total_quantity }} товаров общей стоимостью
+        {{ basket_list.0.total_cost }} руб
     </div>
 {% else %}
     <div class="basket_summary">

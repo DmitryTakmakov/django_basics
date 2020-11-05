@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib import auth
 from django.core.mail import send_mail
-from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, UpdateView
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from authapp.models import ShopUser
@@ -68,47 +68,54 @@ def logout(request):
     return HttpResponseRedirect(reverse('main'))
 
 
-def register(request):
-    title = 'регистрация'
+class UserRegisterView(CreateView):
+    model = ShopUser
+    template_name = 'authapp/register.html'
+    success_url = reverse_lazy('authapp:login')
+    form_class = ShopUserRegisterForm
 
-    if request.method == 'POST':
-        register_form = ShopUserRegisterForm(request.POST, request.FILES)
+    def get_context_data(self, **kwargs):
+        context = super(UserRegisterView, self).get_context_data(**kwargs)
+        context['title'] = 'регистрация'
+        return context
 
-        if register_form.is_valid():
-            user = register_form.save()
-            if send_verification_email(user):
-                print(f'Sending email to {user.email}: Success')
-                return HttpResponseRedirect(reverse('auth:login'))
-            else:
-                print(f'Sending email to {user.email}: Error')
-                return HttpResponseRedirect(reverse('auth:login'))
-    else:
-        register_form = ShopUserRegisterForm()
-    content = {
-        'title': title,
-        'register_form': register_form
-    }
-    return render(request, 'authapp/register.html', content)
+    def form_valid(self, form):
+        user = form.save()
+        if send_verification_email(user):
+            print(f'Sending email to {user.email}: Success')
+        else:
+            print(f'Sending email to {user.email}: Error')
+        user.save()
+
+        return HttpResponseRedirect(self.success_url)
 
 
-@transaction.atomic
-def edit(request):
-    title = 'редактирование'
+class UserEditView(UpdateView):
+    model = ShopUser
+    template_name = 'authapp/edit.html'
+    success_url = reverse_lazy('main')
+    fields = []
 
-    if request.method == 'POST':
-        edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
-        if edit_form.is_valid() and profile_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse('auth:edit'))
-    else:
-        edit_form = ShopUserEditForm(instance=request.user)
-        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
+    def get_context_data(self, **kwargs):
+        context = super(UserEditView, self).get_context_data(**kwargs)
+        context['title'] = 'редактирование'
+        if self.request.POST:
+            context['form'] = ShopUserEditForm(self.request.POST, self.request.FILES, instance=self.object)
+            context['profile_form'] = ShopUserProfileEditForm(self.request.POST, instance=self.object.shopuserprofile)
+            print(context['form'])  # я не знаю почему, но сохранение файлов работает только когда здесь есть принт))
+        else:
+            context['form'] = ShopUserEditForm(instance=self.object)
+            context['profile_form'] = ShopUserProfileEditForm(instance=self.object.shopuserprofile)
 
-    content = {
-        'title': title,
-        'edit_form': edit_form,
-        'profile_form': profile_form
-    }
+        return context
 
-    return render(request, 'authapp/edit.html', content)
+    def form_valid(self, form):
+        context = self.get_context_data()
+        profile_form = context['profile_form']
+
+        self.object = form.save()
+        if profile_form.is_valid():
+            profile_form.instance = self.object
+            profile_form.save()
+
+        return super(UserEditView, self).form_valid(form)
