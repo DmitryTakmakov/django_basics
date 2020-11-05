@@ -5,5 +5,7 @@
 vk_credentials.json
 google_credentials.json
 db.sqlite3
-/tmp/email-messages/
-/tmp/email-messages/*
+/geekshop/tmp/email-messages/
+/geekshop/bin/
+/geekshop/lib/
+pyvenv.cfg
