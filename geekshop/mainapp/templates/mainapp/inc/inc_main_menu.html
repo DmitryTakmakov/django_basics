@@ -1,3 +1,4 @@
+<a href="{% url 'main' %}" class="logo"></a>
 <ul class="menu">
     <li>
         <a href="{% url 'main' %}"
@@ -46,21 +47,23 @@
     {% endif %}
     <li>
         {% if user.is_authenticated %}
-            <a href="{% url 'auth:logout' %}">Выход</a>
+            <a href="{% url 'auth:logout' %}">Выйти</a>
         {% else %}
-            <a href="{% url 'auth:login' %}">Вход</a>
+            <a href="{% url 'auth:login' %}">Войти</a>
         {% endif %}
-    </li>
-    <li>
-        <a href="{% url 'basket:basket' %}"
-           class="basket">
-            {% if basket %}
-                <span>
-                    {{ basket.0.total_cost|floatformat:0 }} руб.
-                    ({{ basket.0.total_quantity }} шт.)
-                </span>
-            {% endif %}
-        </a>
     </li>
 </ul>
 <a href="#" class="search"></a>
+<a href="{% url 'basket:basket' %}"
+   class="basket">
+    {% if basket %}
+        <span>
+            {{ basket.0.total_cost|floatformat:0 }} руб.
+            ({{ basket.0.total_quantity }} шт.)
+        </span>
+        {% else %}
+        <span>
+            0 руб.
+        </span>
+    {% endif %}
+</a>

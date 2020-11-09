@@ -8,6 +8,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from adminapp.forms import ShopUserAdminEditForm, ProductCategoryEditForm, ProductEditForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
+from orderapp.models import Order
 
 
 class UserCreateView(CreateView):
@@ -258,3 +259,21 @@ class ProductDeleteView(DeleteView):
     def get_success_url(self):
         category_pk = self.object.category.pk
         return reverse_lazy('adminapp:products', kwargs={'pk': category_pk})
+
+
+class OrderListView(ListView):
+    model = Order
+    template_name = 'adminapp/orders.html'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'заказы'
+
+        return context
+
+    def get_queryset(self):
+        return super(OrderListView, self).get_queryset().exclude(status=Order.CANCELLED)

@@ -1,0 +1,37 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block content %}
+    <div class="users_list">
+        {% for object in object_list %}
+            <div class="user_record">
+                <div class="user_name">
+                    <p>
+                        <strong>
+                            Заказ №{{ object.pk }}<br>
+                            Пользователь: {{ object.user.username|title }}<br>
+                            Сумма: {{ object.get_total_cost }}руб.
+                        </strong>
+                    </p>
+                </div>
+                <div class="category_actions">
+                    {% if object.status == 'FM' %}
+                        <button>
+                            <a href={% url 'orderapp:order_forming_complete' object.pk %}>
+                                отправить на формирование
+                            </a>
+                        </button>
+                    {% endif %}
+                    {% if object.status == 'STP' %}
+                        <button>
+                            <a href={% url 'adminapp:category_update' object.pk %}>
+                                редактировать
+                            </a>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
