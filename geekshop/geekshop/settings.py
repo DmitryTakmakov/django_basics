@@ -162,9 +162,9 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
 )
 
-with open('geekshop/vk_credentials.json', 'r') as f:
+with open('geekshop/vk_credentials_empty.json', 'r') as f:
     VK = json.load(f)
-with open('geekshop/google_credentials.json', 'r') as f:
+with open('geekshop/google_credentials_empty.json', 'r') as f:
     GOOGLE = json.load(f)
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = VK['SOCIAL_AUTH_VK_OAUTH2_KEY']
