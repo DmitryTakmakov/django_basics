@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'NAME': 'geekshop',
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'django',
-        'PASSWORD': 'geekbrains',
+        'USER': 'postgres',
+        # 'PASSWORD': 'geekbrains',
     }
 }
 
