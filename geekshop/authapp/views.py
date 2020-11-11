@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
@@ -95,6 +97,10 @@ class UserEditView(UpdateView):
     template_name = 'authapp/edit.html'
     success_url = reverse_lazy('main')
     fields = []
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(UpdateView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(UserEditView, self).get_context_data(**kwargs)

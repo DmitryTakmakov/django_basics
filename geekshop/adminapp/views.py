@@ -38,7 +38,6 @@ class UsersListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'пользователи'
-        print(self.request)
         return context
 
 
@@ -192,6 +191,13 @@ class ProductsListView(ListView):
             context['category'] = get_object_or_404(ProductCategory, pk=category_pk)
             return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category_pk = self.kwargs.get('pk', None)
+        if category_pk is not None:
+            queryset = Product.objects.filter(category_id=category_pk).select_related()
+        return queryset
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -276,4 +282,65 @@ class OrderListView(ListView):
         return context
 
     def get_queryset(self):
-        return super(OrderListView, self).get_queryset().exclude(status=Order.CANCELLED)
+        return super(OrderListView, self).get_queryset().exclude(status=Order.CANCELLED).select_related()
+
+
+# class OrderUpdateView(UpdateView):
+#     model = Order
+#     template_name = 'adminapp/order_edit.html'
+#     success_url = reverse_lazy('admin:orders')
+#     form_class = OrderEditForm
+#
+#     @method_decorator(user_passes_test(lambda u: u.is_superuser))
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'update order'
+#         return context
+#
+#
+# class OrderDeleteView(DeleteView):
+#     model = Order
+#     template_name = 'adminapp/order_delete.html'
+#     success_url = reverse_lazy('admin:orders')
+#
+#     @method_decorator(user_passes_test(lambda u: u.is_superuser))
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'delete order'
+#         return context
+#
+#     def get_template_names(self):
+#         names = super().get_template_names()
+#         return names
+#
+#     def delete(self, request, *args, **kwargs):
+#         self.object = self.get_object()
+#         if self.object.is_active:
+#             self.object.is_active = False
+#         else:
+#             self.object.is_active = True
+#         self.object.save()
+#
+#         return HttpResponseRedirect(self.get_success_url())
+#
+#
+# class OrderDetailUpdateView(UpdateView):
+#     model = OrderItem
+#     template_name = 'adminapp/order_details.html'
+#     success_url = reverse_lazy('admin:orders')
+#     form_class = OrderItemEditForm
+#
+#     @method_decorator(user_passes_test(lambda u: u.is_superuser))
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'update order details'
+#         return context
