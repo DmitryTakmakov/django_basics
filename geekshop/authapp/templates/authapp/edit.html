@@ -10,11 +10,6 @@
         <br>
         <input class="form-control" type="submit" value="Сохранить">
     </form>
-    <div class="user_avatar"><img src="
-        {% if object.is_authenticated and not backends.associated %}
-            {{ object.avatar|media_folder_users }}
-        {% else %}
-            {{ object.shopuserprofile.social_avatar }}
-        {% endif %}" alt="Аватар"></div>
+    <div class="user_avatar"><img src="{{ object.avatar|media_folder_users }}" alt="Аватар"></div>
     <a class="btn btn-link" href="{% url 'main' %}">На главную</a>
 {% endblock %}

@@ -67,7 +67,8 @@ def save_user_profile(backend, user, response, *args, **kwargs):
 
         data = resp.json()
         if response['picture']:
-            user.shopuserprofile.social_avatar = response['picture']
+            urllib.request.urlretrieve(data['picture'], f'{settings.MEDIA_ROOT}/users_avatars/av_{user.pk}.jpg')
+            user.avatar = f'users_avatars/av_{user.pk}.jpg'
 
         user.save()
 

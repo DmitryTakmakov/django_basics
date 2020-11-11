@@ -82,7 +82,7 @@ window.onload = function () {
         orderSummaryUpdate(price_array[orderitem_num], delta_quantity);
     }
 
-    $('.order_form select').change(function () {
+    $('.order_form').on('change', 'select', function () {
         let target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-DELETE', ''));
         let orderitem_product_pk = target.options[target.selectedIndex].value;
