@@ -15,12 +15,13 @@ with open(os.path.join(JSON_FILE_PATH, 'contact__locations.json'), 'r', encoding
 
 
 def get_hot_product():
-    products_list = Product.objects.all()
+    products_list = Product.objects.all().select_related('category')
     return random.sample(list(products_list), 1)[0]
 
 
 def get_same_products(hot_product):
-    same_products = Product.objects.filter(category_id=hot_product.category_id).exclude(pk=hot_product.pk)[:3]
+    same_products = Product.objects.filter(category_id=hot_product.category_id).exclude(
+        pk=hot_product.pk).select_related('category')[:3]
     return same_products
 
 
@@ -30,7 +31,8 @@ class IndexPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexPageView, self).get_context_data(**kwargs)
         context['title'] = 'главная'
-        context['latest_products'] = Product.objects.all()[:3]
+        context['latest_products'] = Product.objects.filter(is_active=True, category__is_active=True).select_related(
+            'category')[:3]
         return context
 
 
@@ -98,7 +100,7 @@ def not_found(request, exception):
 
 def product(request, pk):
     product_item = get_object_or_404(Product, pk=pk)
-    links_menu = ProductCategory.objects.filter(is_active=True)
+    links_menu = ProductCategory.objects.filter(is_active=True).select_related()
     title = product_item.name
     content = {
         'title': title,
