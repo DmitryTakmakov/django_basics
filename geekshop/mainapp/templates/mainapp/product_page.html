@@ -1,14 +1,15 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load cache %}
 
 {% block content %}
     <div class="details">
         <div class="links clearfix">
             {% include 'mainapp/inc/inc_categories_menu.html' %}
         </div>
-
-        <div class="details-products">
+        {% cache 3600 product_detailed_info %}
+            <div class="details-products">
             <div class="details-slider">
                 <div class="slider-product">
                     <img src="{{ product.image|media_folder_products }}" alt="">
@@ -43,29 +44,29 @@
                     {{ product.description }}
                 </div>
             </div>
-
-            <div class="related">
-                <div class="title clearfix">
-                    <h2>Похожие продукты</h2>
-                    <a class="explore" href="#">показать все <img src="{% static "img/arrow.png" %}" alt=""></a>
-                </div>
-                <div class="related-products clearfix">
-                    {% for product in same_products %}
-                        <div class="block">
-                            <a href="{% url 'products:product_page' product.pk %}"><img
-                                    src="{{ product.image|media_folder_products }}" alt="{{ product.short_desc }}">
-                                <div class="text">
-                                    <img src="/static/img/icon-hover.png" alt="img">
-                                    <h3>Категория: {{ product.category.name }}</h3>
-                                    <h4>Название: {{ product.name }}</h4>
-                                    <p>Описание: {{ product.description }}</p>
-                                    <p>Цена: {{ product.price }}</p>
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
+        {% endcache %}
+        <div class="related">
+            <div class="title clearfix">
+                <h2>Похожие продукты</h2>
+                <a class="explore" href="#">показать все <img src="{% static "img/arrow.png" %}" alt=""></a>
             </div>
+            <div class="related-products clearfix">
+                {% for product in same_products %}
+                    <div class="block">
+                        <a href="{% url 'products:product_page' product.pk %}"><img
+                                src="{{ product.image|media_folder_products }}" alt="{{ product.short_desc }}">
+                            <div class="text">
+                                <img src="/static/img/icon-hover.png" alt="img">
+                                <h3>Категория: {{ product.category.name }}</h3>
+                                <h4>Название: {{ product.name }}</h4>
+                                <p>Описание: {{ product.description }}</p>
+                                <p>Цена: {{ product.price }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         </div>
 
         <div class="clr"></div>
