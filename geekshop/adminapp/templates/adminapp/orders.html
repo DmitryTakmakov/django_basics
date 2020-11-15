@@ -1,6 +1,7 @@
 {% extends 'adminapp/base.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load cache %}
 
 {% block content %}
     <div class="users_list">
@@ -9,9 +10,11 @@
                 <div class="user_name">
                     <p>
                         <strong>
-                            Заказ №{{ object.pk }}<br>
-                            Пользователь: {{ object.user.username|title }}<br>
-                            Сумма: {{ object.get_total_cost }}руб.
+                            {% cache 600 order_info %}
+                                Заказ №{{ object.pk }}<br>
+                                Пользователь: {{ object.user.username|title }}<br>
+                                Сумма: {{ object.get_total_cost }}руб.
+                            {% endcache %}
                         </strong>
                     </p>
                 </div>

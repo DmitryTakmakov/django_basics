@@ -19,7 +19,7 @@ class OrderList(ListView):
     model = Order
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        return Order.objects.filter(user=self.request.user).select_related()
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -46,7 +46,7 @@ class OrderItemsCreate(CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            basket_item = Basket.get_items(self.request.user)
+            basket_item = Basket.get_items(self.request.user).select_related()
             if len(basket_item):
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(basket_item))
                 formset = OrderFormSet()
