@@ -9,8 +9,8 @@ urlpatterns = [
     path('users/update/<pk>/', adminapp.UserUpdateView.as_view(), name='user_update'),
     path('users/delete/<pk>/', adminapp.UserDeleteView.as_view(), name='user_delete'),
 
-    path('categories/create', adminapp.ProductCategoryCreateView.as_view(), name='category_create'),
-    path('categories/read', adminapp.ProductCategoryListView.as_view(), name='categories'),
+    path('categories/create/', adminapp.ProductCategoryCreateView.as_view(), name='category_create'),
+    path('categories/read/', adminapp.ProductCategoryListView.as_view(), name='categories'),
     path('categories/update/<pk>/', adminapp.ProductCategoryUpdateView.as_view(), name='category_update'),
     path('categories/delete/<pk>/', adminapp.ProductCategoryDeleteView.as_view(), name='category_delete'),
 
@@ -21,4 +21,7 @@ urlpatterns = [
     path('products/delete/<int:pk>/', adminapp.ProductDeleteView.as_view(), name='product_delete'),
 
     path('orders/read/', adminapp.OrderListView.as_view(), name='orders'),
+    path('orders/update/<int:pk>/', adminapp.OrderUpdateView.as_view(), name='order_update'),
+    path('orders/delete/<int:pk>/', adminapp.OrderDeleteView.as_view(), name='order_delete'),
+    path('orders/read/<int:pk>/', adminapp.OrderDetailView.as_view(), name='order_read'),
 ]

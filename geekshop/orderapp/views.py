@@ -123,6 +123,11 @@ class OrderRead(DetailView):
     def dispatch(self, *args, **kwargs):
         return super(DetailView, self).dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'детали заказа №{self.object.id}'
+        return context
+
 
 def order_forming_complete(request, pk):
     order = get_object_or_404(Order, pk=pk)

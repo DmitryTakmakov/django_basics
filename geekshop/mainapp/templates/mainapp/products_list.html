@@ -18,9 +18,8 @@
                         </a>
                     {% endif %}
                     <span class="current">
-            страница {{ products.number }} из
-            {{ products.paginator.num_pages }}
-          </span>
+                        страница {{ products.number }} из {{ products.paginator.num_pages }}
+                    </span>
                     {% if products.has_next %}
                         <a href="{% url 'products:page' category.pk products.next_page_number %}">
                             >

@@ -3,6 +3,7 @@ from django import forms
 from authapp.forms import ShopUserEditForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
+from orderapp.models import Order, OrderItem
 
 
 class ShopUserAdminEditForm(ShopUserEditForm):
@@ -30,6 +31,30 @@ class ProductEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProductEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+
+
+class OrderEditForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''
+
+
+class OrderItemEditForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''

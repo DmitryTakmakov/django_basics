@@ -3,16 +3,17 @@
 
 
 {% block content %}
-    <div class="product_delete">
+    <div class="order_delete">
         Уверены, что хотите
         {% if object.is_active %}
             удалить
         {% else %}
             восстановить
         {% endif %}
-        продукт
-        {{ object.name }}?
-        <form action="{% url 'adminapp:product_delete' object.pk %}"
+        заказ №
+        {{ object.pk }}
+        пользователя {{ object.user.first_name|title }} {{ object.user.last_name|title }}?
+        <form action="{% url 'adminapp:order_delete' object.pk %}"
               method="post">
             {% csrf_token %}
             {% if object.is_active %}
@@ -22,7 +23,7 @@
             {% endif %}
         </form>
         <button class="btn btn-success">
-            <a href="{% url 'adminapp:products' object.category.pk %}">
+            <a href="{% url 'adminapp:orders' %}">
                 Отмена
             </a>
         </button>

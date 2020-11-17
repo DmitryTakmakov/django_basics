@@ -11,7 +11,7 @@
             Пользователь
         {% endif %}
     </div>
-    <table class="table orders_list">
+    <table class="table order_list">
         <thead>
         <tr>
             <th>ID</th>
@@ -24,7 +24,7 @@
         {% for item in object_list %}
             {% if item.is_active %}
                 <tr>
-                    <td class="td1 orders_list">{{ item.pk }}</td>
+                    <td class="td1 order_list">{{ item.pk }}</td>
                     <td>{{ item.created|date:"Y-m-d H:i:s" }}</td>
                     <td>{{ item.updated|date:"Y-m-d H:i:s" }}</td>
                     <td>{{ item.get_status_display }}</td>
