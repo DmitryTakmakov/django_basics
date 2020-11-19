@@ -91,7 +91,12 @@ def get_products_in_category_ordered_by_price(pk):
 
 def get_hot_product():
     products_list = get_products()
-    return random.sample(list(products_list), 1)[0]
+    try:
+        return random.sample(list(products_list), 1)[0]
+    except ValueError as e:
+        print(f'error! {e}')
+        dummy_cat = ProductCategory.objects.create(id=1, name='dummy')
+        return Product.objects.create(pk=0, category_id=dummy_cat.id, name='dummy_product')
 
 
 def get_same_products(hot_product):
@@ -110,7 +115,7 @@ class IndexPageView(TemplateView):
         return context
 
 
-@cache_page(3600)
+# @cache_page(3600)
 def products(request, pk=None, page=1):
     title = 'продукты'
     links_menu = get_links_menu()
