@@ -2,7 +2,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.views.decorators.cache import cache_page
 
 import mainapp.views as mainapp
 
@@ -10,7 +9,7 @@ urlpatterns = [
     path('', mainapp.IndexPageView.as_view(), name='main'),
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
-    path('contact/', cache_page(3600)(mainapp.ContactPageView.as_view()), name='contact'),
+    path('contact/', mainapp.ContactPageView.as_view(), name='contact'),
     path('basket/', include('basketapp.urls', namespace='basket')),
     path('admin/', include('adminapp.urls', namespace='adminapp')),
     path('', include('social_django.urls', namespace='social')),
