@@ -63,11 +63,11 @@ def edit(request, pk, quantity):
         else:
             new_basket_item.delete()
 
-        basket_items = Basket.objects.filter(user=request.user).select_related()
+        basket_list = Basket.objects.filter(user=request.user).select_related()
         content = {
-            'basket_items': basket_items,
+            'basket_list': basket_list,
         }
 
-        result = render_to_string('basketapp/inc/inc_basket_list.html', content)
+        result = render_to_string('basketapp/inc/inc_basket_list.html', context=content, request=request)
 
         return JsonResponse({'result': result})

@@ -13,7 +13,7 @@ class ShopUser(AbstractUser):
 
     activation_key = models.CharField(max_length=128, blank=True)
     activation_key_expires = models.DateTimeField(default=(now() + timedelta(hours=48)))
-    # TODO напомнить Олегу о постоянно создающихся миграциях вот тут
+    # TODO переделать это поле на вызов функции
 
     def is_activation_key_expired(self):
         if now() <= self.activation_key_expires:
